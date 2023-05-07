@@ -8,7 +8,6 @@ with open('textfile.txt', 'r') as f:
     lines = re.split('[.!?]', lines)
     lines_l = re.split('[.!?]', lines_l)
 
-
 class Server:
     def __init__(self):
 
@@ -61,6 +60,10 @@ class Server:
                         print("Connection stopped.")
                         sock.close()
                         break
+
+                    if data == "/WHO":
+                        connection.send(self.whoami().encode(utf))
+                        logging.info("Sent a whoami message.")
                     else:
                         results = self.search(data)
 
@@ -94,13 +97,17 @@ class Server:
 
     def welcome_message(self):
         welcome = [
-            "Hello! Within this app you can send a context to the server and then receive the message.",
+            "Hello! Within this lab you can send a context to the server and then receive the message.",
             "In case the program finds the context within the text file, you will get the ",
             "lines with the context in it.",
             "If the context won't be found you will get the warning message.",
             "Either way you can always stop the program by using '/EXIT'."
         ]
         return welcome
+
+    def whoami(self):
+        who = "K26 student Zhelezniak Serhii. Variant - 10.\n"
+        return who
 
 
 def main():
